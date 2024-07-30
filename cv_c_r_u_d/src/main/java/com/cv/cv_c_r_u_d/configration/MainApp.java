@@ -1,4 +1,4 @@
-package com.cv.cv_c_r_u_d.Configration;
+package com.cv.cv_c_r_u_d.configration;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

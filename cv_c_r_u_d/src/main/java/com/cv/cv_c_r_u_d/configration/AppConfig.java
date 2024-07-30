@@ -1,4 +1,4 @@
-package com.cv.cv_c_r_u_d.Configration;
+package com.cv.cv_c_r_u_d.configration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 @EnableWebMvc
 @Configuration
@@ -37,4 +38,9 @@ public class AppConfig {
         dataSource.setPassword(env.getProperty("spring.datasource.password"));
         return dataSource;
     }
+
+    // @Bean
+    // SpringSecurityDialect springSecurityDialect() {
+    // return new SpringSecurityDialect();
+    // }
 }
