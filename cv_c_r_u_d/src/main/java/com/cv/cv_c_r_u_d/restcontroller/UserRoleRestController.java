@@ -15,44 +15,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cv.cv_c_r_u_d.customannotation.ValidId;
-import com.cv.cv_c_r_u_d.models.Users;
-import com.cv.cv_c_r_u_d.service.UsersCRUD;
+import com.cv.cv_c_r_u_d.models.UserRole;
+import com.cv.cv_c_r_u_d.service.UserRoleCRUD;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/users")
-public class UsersRestController {
-
+@RequestMapping("/api/userRole")
+public class UserRoleRestController {
     @Autowired
-    private UsersCRUD usersCRUD;
+    private UserRoleCRUD uRoleCRUD;
 
     @GetMapping
-    public ResponseEntity<List<Users>> getAllUsers() {
-        return ResponseEntity.ok(usersCRUD.getAll());
+    public ResponseEntity<List<UserRole>> getAllRoles() {
+        return ResponseEntity.ok(uRoleCRUD.getAllUserRoles());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable @ValidId Long id) {
-        Optional<Users> user = usersCRUD.getById(id);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UserRole> getUserRoleById(@PathVariable @ValidId Long id) {
+        Optional<UserRole> userRole = uRoleCRUD.getUserRoleById(id);
+        return userRole.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody Users user) {
-        usersCRUD.saveInfo(user.getName(), user.getEmail(), user.getPassword(), user.getMobilePhone());
+    public ResponseEntity<Void> createUser(@Valid @RequestBody UserRole userRole) {
+        uRoleCRUD.saveInfo(userRole.getName(), userRole.getRole());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable @ValidId Long id, @Valid @RequestBody Users user) {
-        usersCRUD.updateInfo(user.getName(), user.getEmail(), user.getPassword(), user.getMobilePhone(), id);
+    public ResponseEntity<Void> updateUser(@PathVariable @ValidId Long id, @Valid @RequestBody UserRole userRole) {
+        uRoleCRUD.updateInfo(userRole.getName(), userRole.getRole(), id);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable @ValidId Long id) {
-        usersCRUD.delete(id);
+        uRoleCRUD.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cv.cv_c_r_u_d.DAO.UsersAccOp;
-import com.cv.cv_c_r_u_d.model.Users;
+import com.cv.cv_c_r_u_d.dataaccessopject.UsersAccOp;
+import com.cv.cv_c_r_u_d.models.Users;
 
 import jakarta.transaction.Transactional;
 

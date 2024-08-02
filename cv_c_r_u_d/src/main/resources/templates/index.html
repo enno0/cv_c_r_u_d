@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Email Sender</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Send an Email</h1>
+    <form id="emailForm">
+        <label for="toEmail">To:</label>
+        <input type="email" id="toEmail" name="toEmail" required><br>
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required><br>
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" required></textarea><br>
+        <button type="submit">Send Email</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            $('#emailForm').on('submit', function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                const toEmail = $('#toEmail').val();
+                const subject = $('#subject').val();
+                const body = $('#body').val();
+
+                $.ajax({
+                    url: '/sendEmail',
+                    type: 'GET',
+                    data: {
+                        toEmail: toEmail,
+                        subject: subject,
+                        body: body
+                    },
+                    success: function (response) {
+                        alert('Email sent successfully');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error sending email: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

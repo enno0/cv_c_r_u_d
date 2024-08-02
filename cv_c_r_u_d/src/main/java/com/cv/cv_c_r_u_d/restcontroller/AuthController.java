@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cv.cv_c_r_u_d.DTO.LoginRequest;
+import com.cv.cv_c_r_u_d.datatransferopject.LoginRequest;
 
 @RestController
 @RequestMapping("/api/auth")

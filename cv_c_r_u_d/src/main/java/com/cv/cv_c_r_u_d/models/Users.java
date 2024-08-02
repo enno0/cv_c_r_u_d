@@ -1,4 +1,4 @@
-package com.cv.cv_c_r_u_d.model;
+package com.cv.cv_c_r_u_d.models;
 
 import com.cv.cv_c_r_u_d.customannotation.ValidPassword;
 
