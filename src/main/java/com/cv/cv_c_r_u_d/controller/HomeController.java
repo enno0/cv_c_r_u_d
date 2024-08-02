@@ -10,4 +10,14 @@ public class HomeController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/manage_users")
+    public String manage_users() {
+        return "manage_users";
+    }
+
+    @GetMapping("/user-list")
+    public String userList() {
+        return "user_list";
+    }
 }
