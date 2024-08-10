@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Tasks Management</h1>
+    <form id="taskForm">
+        <input type="hidden" id="taskId">
+        <label for="title">title:</label>
+        <input type="text" id="title" name="title" required><br>
+        <label for="description">description:</label>
+        <input type="text" id="description" name="description" required><br>
+        <label for="status">status:</label>
+        <input type="text" id="status" name="status" required><br>
+        <button type="submit">Save Task</button>
+        <button onclick="taskList()">task-list</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            const taskId = new URLSearchParams(window.location.search).get('id');
+            if (taskId) {
+                fetchTask(taskId);
+            }
+
+            $('#taskForm').on('submit', function (event) {
+                event.preventDefault();
+
+                const task = {
+                    id: $('#taskId').val(),
+                    title: $('#title').val(),
+                    description: $('#description').val(),
+                    status: $('#status').val()
+                };
+
+                if (task.id) {
+                    updateTask(task);
+                } else {
+                    createTask(task);
+                }
+            });
+        });
+
+        function fetchTask(taskId) {
+            $.ajax({
+                url: `/api/tasks/${taskId}`,
+                type: 'GET',
+                success: function (task) {
+                    $('#taskId').val(task.id);
+                    $('#title').val(task.title);
+                    $('#description').val(task.description);
+                    $('#status').val(task.status);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching task:', error);
+                }
+            });
+        }
+
+        function createTask(task) {
+            $.ajax({
+                url: '/api/tasks',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(task),
+                success: function () {
+                    alert('task created successfully');
+                    $('#taskForm')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error creating task:', xhr.responseText);
+                    alert('Error creating task: ' + xhr.responseText);
+                }
+            });
+        }
+
+        function updateTask(task) {
+            $.ajax({
+                url: `/api/tasks/${task.id}`,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(task),
+                success: function () {
+                    alert('Task updated successfully');
+                    $('#taskForm')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error updating task:', xhr.responseText);
+                    alert('Error updating task: ' + xhr.responseText);
+                }
+            });
+        }
+        function taskList() {
+            window.location.href = `task-list`;
+        }
+    </script>
+</body>
+
+</html>

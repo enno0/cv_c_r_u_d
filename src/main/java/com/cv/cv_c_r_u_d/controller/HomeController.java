@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    @GetMapping("/email")
+    public String email() {
+        return "email";
     }
 
     @GetMapping("/manage_users")
@@ -20,4 +20,30 @@ public class HomeController {
     public String userList() {
         return "user_list";
     }
+
+    @GetMapping("/")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String logout() {
+        return "home";
+    }
+
+    @GetMapping("/manage_tasks")
+    public String manage_tasks() {
+        return "manage_tasks";
+    }
+
+    @GetMapping("/task-list")
+    public String taskList() {
+        return "task_list";
+    }
+
+    @GetMapping("/tyty")
+    public String tyty() {
+        return "tyty";
+    }
+
 }

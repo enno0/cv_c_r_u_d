@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Task Management</h1>
+
+    <h2>Search Tasks</h2>
+    <form id="searchForm">
+        <label for="operation">Operation:</label>
+        <select id="operation" name="operation">
+            <option value="Title">Title</option>
+            <option value="Description">Description</option>
+            <option value="Status">Status</option>
+        </select>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status">
+
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Get All Tasks</h2>
+    <button id="getAllTasksButton">Get All Tasks</button>
+
+    <h2>Get Tasks By Title</h2>
+    <form id="getByTitleForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+
+        <button type="submit">Get Tasks By Title</button>
+    </form>
+
+    <h2>Get Tasks By Description</h2>
+    <form id="getByDescriptionForm">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+
+        <button type="submit">Get Tasks By Description</button>
+    </form>
+
+    <h2>Get Tasks By Status</h2>
+    <form id="getByStatusForm">
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status">
+
+        <button type="submit">Get Tasks By Status</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();
+                var operation = $('#operation').val();
+                var title = $('#title').val();
+                var description = $('#description').val();
+                var status = $('#status').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/tasks/search',
+                    data: { operation: operation, title: title, description: description, status: status },
+                    success: function (data) {
+                        $('#result').html('');
+                        $.each(data, function (index, task) {
+                            $('#result').append('<p>Task ' + task.id + ': ' + task.title + ' - ' + task.description + ' - ' + task.status + '</p>');
+                        });
+                    }
+                });
+            });
+
+            $('#getAllTasksButton').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/tasks',
+                    success: function (data) {
+                        $('#result').html('');
+                        $.each(data, function (index, task) {
+                            $('#result').append('<p>Task ' + task.id + ': ' + task.title + ' - ' + task.description + ' - ' + task.status + '</p>');
+                        });
+                    }
+                });
+            });
+
+            $('#getByTitleForm').submit(function (event) {
+                event.preventDefault();
+                var title = $('#getByTitleForm #title').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/tasks/byTitle',
+                    data: { title: title },
+                    success: function (data) {
+                        $('#result').html('');
+                        $.each(data, function (index, task) {
+                            $('#result').append('<p>Task ' + task.id + ': ' + task.title + ' - ' + task.description + ' - ' + task.status + '</p>');
+                        });
+                    }
+                });
+            });
+
+            $('#getByDescriptionForm').submit(function (event) {
+                event.preventDefault();
+                var description = $('#getByDescriptionForm #description').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/tasks/byDescription',
+                    data: { description: description },
+                    success: function (data) {
+                        $('#result').html('');
+                        $.each(data, function (index, task) {
+                            $('#result').append('<p>Task ' + task.id + ': ' + task.title + ' - ' + task.description + ' - ' + task.status + '</p>');
+                        });
+                    }
+                });
+            });
+
+            $('#getByStatusForm').submit(function (event) {
+                event.preventDefault();
+                var status = $('#getByStatusForm #status').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/tasks/byStatus',
+                    data: { status: status },
+                    success: function (data) {
+                        $('#result').html('');
+                        $.each(data, function (index, task) {
+                            $('#result').append('<p>Task ' + task.id + ': ' + task.title + ' - ' + task.description + ' - ' + task.status + '</p>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
